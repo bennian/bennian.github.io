@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="语料的获取下载相比于其他语料，中文维基百科提供了免费的语料资源，可以直接从中文维基百科标题和正文处直接下载。 抽取对下载好的文件，可以使用Wikipedia_Extractor直接对文件进行抽取处理：首先在解压缩下载文件得到xml格式的数据，然后执行WikiExtractor.py处理xml数据即可：1$ ./WikiExtractor.py -b 1000M -o extracted2 zhwi">
+<meta property="og:type" content="article">
+<meta property="og:title" content="中文维基百科的主题模型分析">
+<meta property="og:url" content="http://yoursite.com/2017/03/14/中文维基百科的主题模型分析/index.html">
+<meta property="og:site_name" content="冰冰冰室">
+<meta property="og:description" content="语料的获取下载相比于其他语料，中文维基百科提供了免费的语料资源，可以直接从中文维基百科标题和正文处直接下载。 抽取对下载好的文件，可以使用Wikipedia_Extractor直接对文件进行抽取处理：首先在解压缩下载文件得到xml格式的数据，然后执行WikiExtractor.py处理xml数据即可：1$ ./WikiExtractor.py -b 1000M -o extracted2 zhwi">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://benny-1258761034.cos.ap-guangzhou.myqcloud.com/max_word.jpg">
+<meta property="og:image" content="https://benny-1258761034.cos.ap-guangzhou.myqcloud.com/min_word.jpg">
+<meta property="og:updated_time" content="2019-03-05T16:32:04.346Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="中文维基百科的主题模型分析">
+<meta name="twitter:description" content="语料的获取下载相比于其他语料，中文维基百科提供了免费的语料资源，可以直接从中文维基百科标题和正文处直接下载。 抽取对下载好的文件，可以使用Wikipedia_Extractor直接对文件进行抽取处理：首先在解压缩下载文件得到xml格式的数据，然后执行WikiExtractor.py处理xml数据即可：1$ ./WikiExtractor.py -b 1000M -o extracted2 zhwi">
+<meta name="twitter:image" content="https://benny-1258761034.cos.ap-guangzhou.myqcloud.com/max_word.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/03/14/中文维基百科的主题模型分析/">
+
+
+
+
+
+  <title>中文维基百科的主题模型分析 | 冰冰冰室</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">冰冰冰室</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">朝受命而夕饮冰，不舍昼夜</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/14/中文维基百科的主题模型分析/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="柳冰冰">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/bingbing.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="冰冰冰室">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">中文维基百科的主题模型分析</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-14T20:12:20+08:00">
+                2017-03-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/抖机灵/" itemprop="url" rel="index">
+                    <span itemprop="name">抖机灵</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="语料的获取"><a href="#语料的获取" class="headerlink" title="语料的获取"></a>语料的获取</h3><h5 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h5><p>相比于其他语料，中文维基百科提供了免费的语料资源，可以直接从<a href="http://download.wikipedia.com/zhwiki/latest/zhwiki-latest-pages-articles.xml.bz2" target="_blank" rel="noopener">中文维基百科标题和正文</a>处直接下载。</p>
+<h5 id="抽取"><a href="#抽取" class="headerlink" title="抽取"></a>抽取</h5><p>对下载好的文件，可以使用<a href="http://medialab.di.unipi.it/wiki/Wikipedia_Extractor" target="_blank" rel="noopener">Wikipedia_Extractor</a>直接对文件进行抽取处理：首先在解压缩下载文件得到xml格式的数据，然后执行WikiExtractor.py处理xml数据即可：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ./WikiExtractor.py -b 1000M -o extracted2 zhwiki-latest-pages-articles.xml</span><br></pre></td></tr></table></figure></p>
+<p>这表示把指定的xml文件抽取并以1000M的单位大小来切分文件，文件输出到extracted2文件夹中。</p>
+<h5 id="简繁转换"><a href="#简繁转换" class="headerlink" title="简繁转换"></a>简繁转换</h5><p>抽取好的文档混杂的繁体中文，使用opencc可以对抽取的文档进行简繁转换。（很久之前就听说过opencc的作者BYVoid大神的大名TT）<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ opencc -i wiki_00 -o wiki_chs -c zht2zhs.ini</span><br></pre></td></tr></table></figure></p>
+<p>经过简繁转换后，文档就预处理得差不多了。在我的实践中，文章中还剩下一下诸如<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">doc</span> <span class="attr">id</span>=<span class="string">"13"</span> <span class="attr">url</span>=<span class="string">"https://zh.wikipedia.org/wiki?curid=13"</span> <span class="attr">title</span>=<span class="string">"数学"</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>之类的标签没有去除，可以简单的使用python的正则表达式再把它去掉。维基百科中文语料的获取主要参考<span title="你知道的太多了" style="background-color: #252525; color: #252525;" onclick="if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent)) {this.style.background='none';}">抄袭</span> 自 <a href="http://licstar.net/archives/tag/wikipedia-extractor" target="_blank" rel="noopener">这篇文章</a></p>
+<h3 id="结巴中文分词"><a href="#结巴中文分词" class="headerlink" title="结巴中文分词"></a>结巴中文分词</h3><p>主题模型使用的是词袋模型，和英文词语直接有空格隔开不同，中文需要进一步进行分词。目前常用的中文分词工具有jieba<span title="你知道的太多了" style="background-color: #252525; color: #252525;" onclick="if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent)) {this.style.background='none';}">jiba</span> 分词。</p>
+<p>无论是中文文章还是英文文章，文档中都会出现大量的和文档描述的主题没什么关联的词：比如英文的a，and；中文的‘不会’，‘不但’这一大类词语。中文的停用词词表很多，这是其中<a href="https://github.com/dongxiexidian/Chinese/blob/master/stopwords.dat" target="_blank" rel="noopener">一个</a></p>
+<p>进行中文分词后的文本的前后对比：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">基础数学的知识与运用总是个人与团体生活中不可或缺的一块。其基本概念的精炼早在古埃及、美索不达米亚及古印度内的古代数学文本内便可观见。从那时开始，其发展便持续不断地有小幅的进展，直至16世纪的文艺复兴时期，因为和新的科学发现相作用而产生的数学革新导致了知识的加速发展，直至今日。</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">基础 数学 知识 团体 生活 不可或缺 一块 基本概念 精炼 古埃及 美索不达米亚 古印度 古代 数学 文本 可观 发展 持续 地有 小幅 进展 直至 世纪 文艺复兴 时期 科学 发现 作用 数学 革新 导致 知识 加速 发展 直至 今日</span><br></pre></td></tr></table></figure>
+<p>不得不承认我的这次分词还不够智能，短短的一段就出现了‘地有’，‘可观’这样错误。突然想起小朋友用天真造句的梗了：<span title="你知道的太多了" style="background-color: #252525; color: #252525;" onclick="if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent)) {this.style.background='none';}">今天天真冷呀</span>。不过在这段关于数学的文章中，jieba分词的结果并没有对语义造成太大的影响，关键的词语都没有被分错。</p>
+<h3 id="主题模型"><a href="#主题模型" class="headerlink" title="主题模型"></a>主题模型</h3><p>在主题模型，潜在狄利克雷分配（Latent Dirichlet allocation）是我最早接触到。关于LDA中复杂的数学原理，这篇文章讲解得相对深入浅出：LDA数学八卦</p>
+<p>虽然其数学原理相当复杂，但是python中的gensim包使用起来却非常简单。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#coding=utf8</span></span><br><span class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> unicode_literals</span><br><span class="line"><span class="keyword">import</span> io</span><br><span class="line"><span class="keyword">from</span> gensim <span class="keyword">import</span> corpora,models</span><br><span class="line"><span class="keyword">import</span> logging</span><br><span class="line">logging.basicConfig(format=<span class="string">'%(asctime)s : %(levelname)s : %(message)s'</span>, level=logging.INFO)</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">divide</span><span class="params">(x)</span>:</span><span class="comment">#根据文件的特征，切分出文档</span></span><br><span class="line">    <span class="keyword">with</span> io.open(x,encoding =<span class="string">'utf8'</span>) <span class="keyword">as</span> f:</span><br><span class="line">        text=[]</span><br><span class="line">        <span class="keyword">for</span> line <span class="keyword">in</span> f:</span><br><span class="line">            l=line.split()</span><br><span class="line">            <span class="keyword">if</span> len(l)!=<span class="number">0</span>:</span><br><span class="line">                text.extend(l)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="keyword">yield</span> text</span><br><span class="line">                text=[]</span><br><span class="line">            </span><br><span class="line">dictionary=corpora.Dictionary(divide(<span class="string">'outfile.txt'</span>))</span><br><span class="line">corpus = [ dictionary.doc2bow(text) <span class="keyword">for</span> text <span class="keyword">in</span> divide(<span class="string">'outfile.txt'</span>)]</span><br><span class="line">dictionary.save(<span class="string">'mydict1.dic'</span>)</span><br><span class="line">corpora.MmCorpus.serialize(<span class="string">'corpora.mm'</span>, corpus) </span><br><span class="line">lda = models.LdaModel(corpus = corpus,id2word=dictionary,num_topics=<span class="number">100</span>,passes=<span class="number">3</span>)</span><br><span class="line">lda.save(<span class="string">'model1.lda'</span>)</span><br></pre></td></tr></table></figure></p>
+<p>这里因为把所有文档都存到了一个文件中，所以后面根据文件的格式拆分了一下（有些小缺陷，不过应该不会造成太大的偏差）。这里预先设定了100个主题，构建这个主题模型会花费大量的运行时间。</p>
+<h3 id="有趣的结果"><a href="#有趣的结果" class="headerlink" title="有趣的结果"></a>有趣的结果</h3><p>使用python wordcloud可以可视化得到的主题。<br>涉及文档最多的主题：<br><img src="https://benny-1258761034.cos.ap-guangzhou.myqcloud.com/max_word.jpg" alt="涉及文档最多的主题"></p>
+<p>中文维基百科嘛，讲的都是中国的东西。虽然混入了一些奇怪的词语，不过考虑到她涉及了大量的文档，<span title="你知道的太多了" style="background-color: #252525; color: #252525;" onclick="if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent)) {this.style.background='none';}">当然是原谅她啊</span>。<br>涉及文档最少的主题：<br><img src="https://benny-1258761034.cos.ap-guangzhou.myqcloud.com/min_word.jpg" alt="涉及文档最少的主题"><br>AV二字真是分外醒目，<span title="你知道的太多了" style="background-color: #252525; color: #252525;" onclick="if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent)) {this.style.background='none';}">然而并没什么可奇怪的</span>。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/10/写博客的缘由/" rel="next" title="写博客的缘由">
+                <i class="fa fa-chevron-left"></i> 写博客的缘由
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/06/13/关于深度学习进行金融预测的报告/" rel="prev" title="关于深度学习进行金融预测的报告">
+                关于深度学习进行金融预测的报告 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/bingbing.png" alt="柳冰冰">
+            
+              <p class="site-author-name" itemprop="name">柳冰冰</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#语料的获取"><span class="nav-number">1.</span> <span class="nav-text">语料的获取</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#下载"><span class="nav-number">1.0.1.</span> <span class="nav-text">下载</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#抽取"><span class="nav-number">1.0.2.</span> <span class="nav-text">抽取</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#简繁转换"><span class="nav-number">1.0.3.</span> <span class="nav-text">简繁转换</span></a></li></ol></li></ol><li class="nav-item nav-level-3"><a class="nav-link" href="#结巴中文分词"><span class="nav-number">2.</span> <span class="nav-text">结巴中文分词</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#主题模型"><span class="nav-number">3.</span> <span class="nav-text">主题模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#有趣的结果"><span class="nav-number">4.</span> <span class="nav-text">有趣的结果</span></a></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">柳冰冰</span>
+
+  
+</div>
+
+
+  
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>
