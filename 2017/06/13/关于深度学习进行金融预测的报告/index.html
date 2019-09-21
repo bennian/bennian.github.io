@@ -7,7 +7,7 @@
 
 <html class="theme-next pisces use-motion" lang="zh-Hans">
 <head><meta name="generator" content="Hexo 3.8.0">
-  <meta charset="UTF-8">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="theme-color" content="#222">
@@ -128,7 +128,7 @@
 
 
 
-  <title>关于深度学习进行金融预测的报告 | 冰冰冰室</title>
+  <title>关于深度学习进行金融预测的报告 | 冰冰冰室</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -147,7 +147,7 @@
     
   
 
-  <div class="container sidebar-position-left page-post-detail">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -389,7 +389,8 @@
 <ul>
 <li><p>数据的预处理</p>
 <p>观察附件1.1可以发现，自2016-12-08之后，该金融标的价格就再也没有改变。考虑到所有缺少的数值都由最近的之前工作日的值来替代，因此有理由认为在这之后的值都已经缺失，因此需要对其进行删除。</p>
-<p>此处选择90天的窗口，对时间序列进行截断，使用前90天的价格序列来预测下一个价格。窗口长度是一个超参数，后续可以通过超参数搜索的方法调整。对一段子序列{a1,….an}，此处只通过以下式子进行简单处理：<br>$$n_i=(\frac{a_i}{a_0})$$<br>最后从处理得到的序列中，抽取10%的子时间序列来作为测试序列</p>
+<p>此处选择90天的窗口，对时间序列进行截断，使用前90天的价格序列来预测下一个价格。窗口长度是一个超参数，后续可以通过超参数搜索的方法调整。对一段子序列{a1,….an}，此处只通过以下式子进行简单处理：</p>
+<script type="math/tex; mode=display">n_i=(\frac{a_i}{a_0})</script><p>最后从处理得到的序列中，抽取10%的子时间序列来作为测试序列</p>
 </li>
 <li><p>LSTM模型的构建和训练</p>
 <p>Keras基于Theano或TensorFlow，是一个常用的神经网络库。其优点是高度模块化，非常适合快速实验，进行简易快速的原型设计。此处使用keras快速的搭建了一个LSTM模型来进行实验，模型结构如下：<br><img src="https://benny-1258761034.cos.ap-guangzhou.myqcloud.com/1.jpg" alt="lstm"><br>在训练的过程中，程序使用训练集数据中的5%的数据作为验证集，并且使用了提前终止的训练策略。同时，程序使用MSE（最小均方误差）作为代价函数，使用了RMSProp作为优化方法。在模型中，包括节点个数，优化方法等都可以作为超参数进行进一步优化，比如流行的优化方法就还有Adam，SGD等。</p>
@@ -527,7 +528,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -780,10 +781,29 @@
   
 
   
+  
+
 
   
 
   
 
-<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/shizuku.model.json"},"display":{"position":"right","width":100,"height":200},"mobile":{"show":true},"log":false});</script></body>
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/shizuku.model.json"},"display":{"position":"right","width":100,"height":200},"mobile":{"show":true},"log":false});</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="custom_mathjax_source">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end --></body>
 </html>
