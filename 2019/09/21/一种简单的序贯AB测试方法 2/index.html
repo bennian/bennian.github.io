@@ -87,7 +87,7 @@
 <meta property="og:description" content="Sequential AB testing在做AB测试时，为了避免出现重复显著性检验的情况，我们会预先设定一个样本值，只有到流量达到样本阈值时，才会进行统计检验。 这又引申出了一个问题：有没有一种AB测试方法，可以不用提前设置流量阈值，并可以在当实验组效果明显好于对照组的时候，能够提前停止实验？ 一般而言，Sequential AB testing 需要用到序贯分析sequential proba">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://benny-1258761034.cos.ap-guangzhou.myqcloud.com/randomwalk.png">
-<meta property="og:updated_time" content="2019-09-21T12:17:19.112Z">
+<meta property="og:updated_time" content="2019-10-27T06:39:14.934Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="一种简单的序贯AB测试方法">
 <meta name="twitter:description" content="Sequential AB testing在做AB测试时，为了避免出现重复显著性检验的情况，我们会预先设定一个样本值，只有到流量达到样本阈值时，才会进行统计检验。 这又引申出了一个问题：有没有一种AB测试方法，可以不用提前设置流量阈值，并可以在当实验组效果明显好于对照组的时候，能够提前停止实验？ 一般而言，Sequential AB testing 需要用到序贯分析sequential proba">
@@ -397,7 +397,7 @@ a_k =a_0\frac{v(v-1)..(v-k+1)}{(v+k)(v+k-1)(v+1)}=a_0\prod_{i=1}^k\frac{v-k+i}{v
 
 
 综上所述，有
-P_{n,x} = \frac{x}{n}\binom{n}{\frac{n+x}{2}}2^{-n}=\frac {x}{n}{a(x/2)}\approx \sqrt{\frac{2}{\pi}}\frac{x}{n^3}e^{\frac{-x^2}{2n}}
+P_{n,x} = \frac{x}{n}\binom{n}{\frac{n+x}{2}}2^{-n}=\frac {x}{n}{a(x/2)}\approx \sqrt{\frac{2}{\pi}}\frac{x}{\sqrt {n^3} }e^{\frac{-x^2}{2n}}
 
 
 
@@ -411,7 +411,7 @@ P_{n,x} = \frac{x}{n}\binom{n}{\frac{n+x}{2}}2^{-n}=\frac {x}{n}{a(x/2)}\approx 
 
 
 \\
-\int{P_{n,x}}d_x =\int_1^\infty\sqrt{\frac{2}{\pi}}\frac{x}{n^3}e^{\frac{-x^2}{2n}}\\
+\int{P_{n,x}}d_x =\int_1^\infty\sqrt{\frac{2}{\pi}}\frac{x}{\sqrt{n^3} }e^{\frac{-x^2}{2n}}\\
 令t=\frac{x}{\sqrt{n}},则
 
 
