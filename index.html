@@ -259,6 +259,282 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/31/扩散模型/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="柳冰冰">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/bingbing.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="冰冰冰室">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/10/31/扩散模型/" itemprop="url">社会扩散模型概要</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-31T00:00:00+08:00">
+                2019-10-31
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/混社会/" itemprop="url" rel="index">
+                    <span itemprop="name">混社会</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="扩散的基本定义"><a href="#扩散的基本定义" class="headerlink" title="扩散的基本定义"></a>扩散的基本定义</h2><p>扩散通常被定义成一种过程：创新通过该过程在一个社会系统的成员中随时间在不同的渠道传播。作为一个社会系统的过程，扩散具有4个关键元素：创新、传播渠道、时间和社会系统。</p>
+<ul>
+<li>创新：新的想法\产品\目标，比如社会传言、药品、器材、商品等</li>
+<li>传播渠道：信息传播的方式如大众传媒、人际关系等</li>
+<li>时间：时间通常于扩散的速度和规模相关联。</li>
+<li>社会系统：社会系统即创新的潜在采纳者，比如某个地区的全部医生（新药采纳问题），也可以是政府企业乃至全体公民</li>
+</ul>
+<p>看完定义就可以发现，扩散过程会是互联网行业非常关注的一个话题。</p>
+<h2 id="基础扩散模型"><a href="#基础扩散模型" class="headerlink" title="基础扩散模型"></a>基础扩散模型</h2><p>基础扩散模型蕴含了相当多假定：</p>
+<ul>
+<li>扩散过程是二分的，要么采纳，要么不采纳</li>
+<li>潜在采纳者的上限固定</li>
+<li>一个采纳单位只有一次采纳</li>
+<li>该创新独立于其他创新</li>
+<li>内部和外部的影响系数都是固定的（不随时间变化）</li>
+<li>…</li>
+</ul>
+<p>在这些假定之下，基础扩散模型存在三种增长扩散模式</p>
+<h3 id="外部影响模型"><a href="#外部影响模型" class="headerlink" title="外部影响模型"></a>外部影响模型</h3><p>模型表达式</p>
+<script type="math/tex; mode=display">
+\frac{dN(t)}{dt}=a[\overline{N}-N(t)]\\</script><p>其中<br>$N(t)$表示t时刻的采纳者人数<br>$\overline{N}$表示潜在采纳者总数<br>$a$表示外部影响的系数，来自社会系统的外部；通常可以认为是大众传媒对扩散的影响。</p>
+<p>该模型的特点：</p>
+<ul>
+<li>不考虑先行采纳者和潜在采纳者的交互作用</li>
+<li>总的增长速率恒定递减</li>
+<li>增长曲线是一个指数衰减曲线，扩散曲线可以表示为$N(t)=\overline{N}[1-exp(-at)]​$</li>
+</ul>
+<p>应用案例：</p>
+<ul>
+<li>新药在美国西部社区医生中的扩散（1966）</li>
+<li>罢工\暗杀在发展中国家的传播扩散（1973）</li>
+</ul>
+<p>个人理解这个模型只适用于社会成员彼此孤立（个体信息交流不便捷）的时候，现代社会成员通讯发达，先行者和潜在者的交互是很难忽略的。</p>
+<h3 id="内部影响模型"><a href="#内部影响模型" class="headerlink" title="内部影响模型"></a>内部影响模型</h3><p>该模型假定扩散仅仅通过人际接触进行。</p>
+<script type="math/tex; mode=display">
+\frac{dN(t)}{dt}=bN(t)[\overline{N}-N(t)]\\</script><p>其中<br>$N(t)$表示t时刻的采纳者人数<br>$\overline{N}$表示潜在采纳者总数<br>人际交互由$N(t)[\overline{N}-N(t)]$表示。</p>
+<p>该模型的特点：</p>
+<ul>
+<li>只考虑人际接触的传播</li>
+<li>S型增长曲线，表达式可以表示为$N(t)=\frac{\overline{N} }{ 1+\frac{\overline{N}-N_0}{N_0}exp[-b\overline{N}(t-t_0)]}$</li>
+</ul>
+<p>应用案例：</p>
+<ul>
+<li>工业创新（柴油机）的扩散</li>
+<li>玉米种子的扩散</li>
+</ul>
+<p>当一项创新应用复杂（意味着不方便通过大众媒体传播而更依赖向先行者学习），需要先行者的经验，同时若不采纳会带来劣势（商业上的竞争劣势等），内部影响模型较为合适。</p>
+<h3 id="混合影响模型"><a href="#混合影响模型" class="headerlink" title="混合影响模型"></a>混合影响模型</h3><p>混合模型同时考虑了外部影响和内部影响</p>
+<script type="math/tex; mode=display">
+\frac{dN(t)}{dt}=(a+bN(t))[\overline{N}-N(t)]</script><p>该模型特点：</p>
+<ul>
+<li><p>同时考虑了内部影响和外部影响，更具通用性</p>
+</li>
+<li><p>S型增长曲线，表达式可以表示为 </p>
+<script type="math/tex; mode=display">
+N(t)=\frac{\overline{N}-\frac{a(\overline{N}-N_0)}{a+bN_0}exp[-(a+b\overline{N})(t-t_0)]}{1+\frac{b(\overline{N}-N_0)}{a+bN_0}exp[-(a+b\overline{N})(t-t_0)]}</script></li>
+</ul>
+<p>应用案例：</p>
+<ul>
+<li>耐用消费品的长期销量</li>
+</ul>
+<p>耐用消费品确实是一个非常契合基础扩散模型的场合，耐用意味着接纳者只会接纳一次，同时考虑了外部媒体和内部口碑效应的影响。对于互联网产品，基础扩散模型没有考虑到网络效应，同时内部影响的假定略微简单了。</p>
+<h3 id="参数估计方法"><a href="#参数估计方法" class="headerlink" title="参数估计方法"></a>参数估计方法</h3><p>对于混合影响模型</p>
+<script type="math/tex; mode=display">
+\frac{dN(t)}{dt}=(a+bN(t))[\overline{N}-N(t)]</script><p>​                    </p>
+<p>离散方式可以表示成</p>
+<script type="math/tex; mode=display">
+N(t+1)-N(t)=a\overline{N}+(b\overline{N}-a)N(t)-bN^2(t)\\
+=A_1+A_2N(t)+A_3N^2(t)+e(t)</script><p>此时可以通过最小二乘法计算出$A$项</p>
+<p>最后有</p>
+<script type="math/tex; mode=display">
+a=A_1/\overline{N}\\
+b=-A_3 \\
+\overline{N}=\frac{-A_2 \pm \sqrt{A^2_2-4A_1A_3}}{2A_3}</script><h2 id="扩展与改进"><a href="#扩展与改进" class="headerlink" title="扩展与改进"></a>扩展与改进</h2><h3 id="可变扩散"><a href="#可变扩散" class="headerlink" title="可变扩散"></a>可变扩散</h3><h5 id="jeuland模型"><a href="#jeuland模型" class="headerlink" title="jeuland模型"></a>jeuland模型</h5><p>jeuland模型有以下假定</p>
+<ul>
+<li>扩散过程中外部影响与潜在采纳者的倾向有关</li>
+<li>潜在采纳者倾向是差异分布的</li>
+<li>采纳的倾向服从gamma分布</li>
+</ul>
+<p>此时</p>
+<script type="math/tex; mode=display">
+F(t)=\frac{N(t)}{\overline{N}}\\
+\frac{dF}{dt}=(a+bF)(1-F)^{1+\gamma},其中\gamma是预设参数</script><p>jeuland模型可以根据参数设定发生退化，当$\gamma=0​$,jeuland模型退化成bass模型（意味着潜在采纳者倾向一致）</p>
+<h3 id="动态扩散"><a href="#动态扩散" class="headerlink" title="动态扩散"></a>动态扩散</h3><p>动态扩散模型主要是假定潜在上限是可变的</p>
+<script type="math/tex; mode=display">
+\overline{N}(t)=f(S(t))
+\\
+此时
+\frac{dN(t)}{dt}=(a+bN(t))[f(s(t))-N(t)]\\
+方程的解为\\
+N(t)=-\frac{a}{b}+\frac{exp[a(t-t_0)+b\phi(t)]}{(\frac{b}{a+bN_0})+b\int_{t_0}^{t}exp[a(t-t_0)+b\phi(t)]dx}\\
+其中，N(t=t_0)=N_0,\phi(t)=\int_{t_0}^{t}f(S(t))dx</script><h5 id="案例："><a href="#案例：" class="headerlink" title="案例："></a>案例：</h5><ul>
+<li><p>估计计算机的自然增长（1967）</p>
+<p>首先假设计算机的潜在采纳者和计算机的价格相关。</p>
+<script type="math/tex; mode=display">
+\overline{N}(t)=B_0[P(t)]^{-B_1},其中P(t)是价格，B_0，B_1是常数</script><p>并使用动态扩散模型来估计计算机销量自然增长</p>
+</li>
+</ul>
+<h3 id="多重扩散"><a href="#多重扩散" class="headerlink" title="多重扩散"></a>多重扩散</h3><p>创新并非单独出现的，创新之间具有相互影响的关系。</p>
+<p>相互影响关系至少有以下几种：</p>
+<ul>
+<li>独立性</li>
+<li>互补性：一项创新采纳的增加会促进另一项采纳（洗衣机和干衣机）</li>
+<li>有条件性：一项创新采纳要取决于其他创新的采纳情况（计算机软件和计算机）</li>
+<li>可替代性：一项创新会导致另一项创新的采纳的减少（黑白电视和彩色电视）</li>
+</ul>
+<p>比如可替代性可以表示为：</p>
+<script type="math/tex; mode=display">
+\frac{dN_1(t)}{dt}=[a_1+b_1N_1(t)-c_1N_2(t)][\overline{N}_1-N_1(t)]\\
+\frac{dN_2(t)}{dt}=[a_2+b_2N_2(t)-c_2N_1(t)][\overline{N}_2-N_2(t)]</script><p>需要注意的是，替代可能是单向性，彩色电视对黑白电视有替代作用，反过来未必如此。</p>
+<h3 id="时空扩散模型"><a href="#时空扩散模型" class="headerlink" title="时空扩散模型"></a>时空扩散模型</h3><p>地理上的扩散通常要遵循以下规则：</p>
+<ul>
+<li>等级效应：先从大的中心点再到小的中心点</li>
+<li>邻近效应：先从中心开始，逐渐向四周扩散</li>
+</ul>
+<p>当设计到地理空间的扩散是，一种方式是根据每个地区的情况使用一个扩散模型，另一种是把邻近效应添加到扩散模型中。</p>
+<h3 id="多阶段扩散"><a href="#多阶段扩散" class="headerlink" title="多阶段扩散"></a>多阶段扩散</h3><p>多阶段扩散中，社会成员需要经历多个阶段才能变成采纳者（比如，吃瓜群众-潜在采纳者-采纳者），同时采纳者也可能退化遗忘变回吃瓜群众。</p>
+<h5 id="dodson-muller模型（1978）"><a href="#dodson-muller模型（1978）" class="headerlink" title="dodson-muller模型（1978）"></a>dodson-muller模型（1978）</h5><script type="math/tex; mode=display">
+基本假定1：\\吃瓜群众+潜在采纳者+采纳者的人群总数守恒\\
+\frac{dx(t)}{dt}+\frac{dy(t)}{dt}+\frac{dz(t)}{dt}=0\\
+基本假定2:\\
+吃瓜群众和采纳者的相互作用:\beta x(y+z)\\
+外部影响：\mu x\\
+潜在采纳者向采纳者的转变：\gamma y\\
+\frac{dy}{dt}=\beta x(y+z)+\mu x-\gamma y\\
+\frac{dz}{dt}=\gamma y</script><script type="math/tex; mode=display">
+最后，把
+x=M-\overline{N}(t),y=\overline{N}(t)-N(t),z=N(t)
+带入前面微分方程即可</script><h3 id="带重复采纳的扩散"><a href="#带重复采纳的扩散" class="headerlink" title="带重复采纳的扩散"></a>带重复采纳的扩散</h3><p>基础模型只允许一次采纳，现实中扩散可以带多种采纳。</p>
+<h5 id="Lilien重复购买模型（1981）"><a href="#Lilien重复购买模型（1981）" class="headerlink" title="Lilien重复购买模型（1981）"></a>Lilien重复购买模型（1981）</h5><script type="math/tex; mode=display">
+N（t+1）= a(t)[\overline{N}-N(t)]+b[N(t)-N(t-1)][\overline{N}-N(t)]+c(t)N(t)\\
+其中，a(t)[\overline{N}-N(t)]反应外部影响，b[N(t)-N(t-1)][\overline{N}-N(t)]表示口头相互交流，c(t)N(t)表示继续采纳者</script><h3 id="带中介的扩散"><a href="#带中介的扩散" class="headerlink" title="带中介的扩散"></a>带中介的扩散</h3><p>假设各个因素都受到中介的影响</p>
+<script type="math/tex; mode=display">
+常见的假设如：\\
+把价格作为内部影响的关键：b_t=\beta_1exp(-\beta_2 \times price_t)\\
+把广告花费作为外部影响的关键：a_t=\alpha_1+\alpha_2\times ln(A_t)</script>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/21/一种简单的序贯AB测试方法 2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1321,7 +1597,7 @@ H_0：p_c = p_t ;H_1:p_t>p_c
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1332,7 +1608,7 @@ H_0：p_c = p_t ;H_1:p_t>p_c
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">3</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
